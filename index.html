@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Mastery Platform — Zero to Senior Engineer</title>
+  <meta name="description" content="Complete interactive CSS learning platform with live editors, 1000+ interview questions, and real-world projects.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LOADING ============ -->
+<div id="loading">
+  <div class="logo-icon" style="width:48px;height:48px;font-size:22px;margin-bottom:16px;">✦</div>
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading CSS Mastery Platform...</div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">✦</div>
+      <div class="logo-text">CSS <span>Mastery</span></div>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" id="sidebar-search" placeholder="Search topics... (Ctrl+/)">
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- HEADER -->
+    <header id="header">
+      <button class="header-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+      <div class="header-breadcrumb" id="header-breadcrumb">
+        <span class="crumb-active">Dashboard</span>
+      </div>
+      <div class="header-actions">
+        <div class="progress-ring" title="Course Progress">
+          <span id="progress-pct" style="font-size:12px;color:var(--text-muted);">0%</span>
+          <div class="progress-bar-mini">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme" style="padding:6px 10px;">🌙</button>
+        <button class="btn btn-ghost" onclick="navigateTo('interview')" style="font-size:12px;">💼 Interview</button>
+        <button class="btn btn-accent" onclick="navigateTo('practice')" style="font-size:12px;">🧪 Practice</button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- HOME -->
+      <div class="page active" id="page-home"></div>
+
+      <!-- LESSON -->
+      <div class="page" id="page-lesson">
+        <div class="lesson-layout">
+          <div class="lesson-content" id="lesson-content"></div>
+          <div class="lesson-playground" id="playground-container"></div>
+        </div>
+      </div>
+
+      <!-- INTERVIEW -->
+      <div class="page" id="page-interview"></div>
+
+      <!-- PRACTICE LIST -->
+      <div class="page" id="page-practice"></div>
+
+      <!-- CHALLENGE EDITOR -->
+      <div class="page" id="page-challenge">
+        <div class="challenge-editor-layout">
+          <div class="challenge-desc" id="challenge-desc"></div>
+          <div class="challenge-editor" id="challenge-editor-panel"></div>
+          <div class="challenge-preview" style="display:flex;flex-direction:column;">
+            <div style="padding:8px 12px;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;background:var(--bg-secondary);flex-shrink:0;">
+              <span>LIVE PREVIEW</span>
+              <button class="editor-btn" onclick="openFullPreview('ch')" style="font-size:10px;">⛶ Expand</button>
+            </div>
+            <iframe id="ch-preview" title="Challenge Preview"
+              style="width:100%;flex:1;border:none;display:block;background:white;"
+              sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="page" id="page-progress"></div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<!-- ============ SCRIPTS — ORDER MATTERS ============ -->
+<!-- 1. Data first -->
+<script src="questions.js"></script>
+<script src="data.js"></script>
+
+<!-- 2. Editor (defines buildPlaygroundHTML, buildChallengeEditorHTML, EDITOR) -->
+<script src="editor.js"></script>
+
+<!-- 3. Inject playground HTML into DOM BEFORE app.js runs -->
+<script>
+  document.getElementById('playground-container').innerHTML   = buildPlaygroundHTML('pg');
+  document.getElementById('challenge-editor-panel').innerHTML = buildChallengeEditorHTML('ch');
+</script>
+
+<!-- 4. App logic (DOMContentLoaded fires here — all elements exist) -->
+<script src="app.js"></script>
+
+</body>
+</html>
